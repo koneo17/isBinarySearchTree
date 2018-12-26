@@ -78,7 +78,15 @@ class Program
                 }
             }
         }
-
+	public static void AddToStack(Stack<Node> stack, Node node)
+        {
+            Node currentNode = node;
+            while (currentNode != null)
+            {
+                stack.Push(currentNode);
+                currentNode = currentNode.left;
+            }
+        }
 	public static bool IsBinarySearchTree(Node n)
         {
             Node head = n;
