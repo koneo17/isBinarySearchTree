@@ -1,0 +1,127 @@
+class Program
+{
+	public class Node
+        {
+            public Node left;
+            public Node right;
+            public int data;
+        }
+
+        public static Node AddNode(int x, Node head)
+        {
+            Node currentNode = head;
+            if(currentNode == null)
+            {
+                Node newNode = new Node();
+                newNode.data = x;
+                currentNode = newNode;
+                head = currentNode;
+            }
+            else
+            {
+                    if (currentNode.data > x)
+                    {
+                        if (currentNode.left == null)
+                        {
+                            Node newNode = new Node();
+                            newNode.data = x;
+                            currentNode.left = newNode;
+                        }
+                        else
+                            AddNode(x, currentNode.left);
+                    }
+                    else if(currentNode.data <= x)
+                    {
+                        if (currentNode.right == null)
+                        {
+                            Node newNode = new Node();
+                            newNode.data = x;
+                            currentNode.right = newNode;
+                        }
+                        else
+                            AddNode(x, currentNode.right);
+                    }
+            }
+            return head;
+        }
+
+        public static void DisplayAllElementsRecursive(Node head)
+        {
+            Node current = head;
+            if (current == null)
+                return;
+            else
+            {
+                //Console.WriteLine(current.data + " "); //PreOrder
+                DisplayAllElementsRecursive(current.left);
+                Console.WriteLine(current.data + " "); //InOrder
+                DisplayAllElementsRecursive(current.right);
+               // Console.WriteLine(current.data + " "); //PostOrder
+            }
+        }
+
+        public static void DisplayAllElementsIterative(Node head)
+        {
+            Node current = head;
+            if (current == null)
+                return;
+            else
+            {
+                Stack<Node> stack = new Stack<Node>();
+                AddToStack(stack, current);
+                while(stack.Count > 0)
+                {
+                    Node tempNode = stack.Pop();
+                    Console.WriteLine(tempNode.data);
+                    if (tempNode.right != null)
+                        AddToStack(stack, tempNode.right);
+                }
+            }
+        }
+
+	public static bool IsBinarySearchTree(Node n)
+        {
+            Node head = n;
+            Node current = head;
+            Node prev = null;
+            Node next = null;
+
+            if (current == null)
+                return true;
+            else
+            {
+                next = current.right;
+                prev = current.left;
+
+                if (current?.data < prev?.data || current?.data > next?.data)
+                    return false;
+                else
+                    return IsBinarySearchTree(next) && IsBinarySearchTree(prev);
+            }
+        }
+	static void Main(string[] args)
+        {
+            int[]  arr = { 5, 3, 7, 1, 4, 6, 8 };
+            
+            Node BST = new Node();
+            BST = null;
+            Node head = BST;
+            Node current = null;
+	    //Building the BST
+            foreach (int i in arr)
+            {
+                head = AddNode(i, head);
+            }
+
+            Console.WriteLine("**************Recursion*****************");
+            DisplayAllElementsRecursive(head);
+
+	    //Console.WriteLine("**************Iteration*****************");
+            //DisplayAllElementsIterative(head);
+
+            bool result = IsBinarySearchTree(head);
+            Console.WriteLine(result == true ? "This is a BST!" : "This is not a BST");
+            
+
+        }
+}
