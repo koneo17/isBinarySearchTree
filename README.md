@@ -1,2 +1,2 @@
-# isBinarySearchTree
-Function to check if a Tree is a Binary Search Tree
+# BinarySearchTree
+BinarySearchTree with function such as Pre-Order, In-Order and Post-Order Traversal, and isBinarySearchTree
